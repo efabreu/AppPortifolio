@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.GithubFragment">
+
+    <RelativeLayout
+        android:id="@+id/layout_header_github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/github_img_avatar"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/efabreu_photo"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            app:civ_fill_color="@color/white"
+            android:layout_alignParentLeft="true"/>
+
+        <LinearLayout
+            android:id="@+id/gihub_ll_nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/github_img_avatar">
+
+            <TextView
+                android:id="@+id/github_tv_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/none"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:id="@+id/github_tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="8dp"
+                android:text="@string/none"
+                android:layout_toRightOf="@id/github_tv_nome"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/github_tv_bio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/lorem"
+            android:maxLines="5"
+            android:layout_toRightOf="@id/github_img_avatar"
+            android:layout_below="@id/gihub_ll_nome"/>
+
+    </RelativeLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_repositories"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_header_github"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"/>
+
+
+
+
+</RelativeLayout>
