@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import br.com.efabreu.portifolioefabreu.R
 import br.com.efabreu.portifolioefabreu.data.OwnerApi
@@ -30,6 +32,7 @@ class GithubFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var header :RelativeLayout
     lateinit var tvNome :TextView
     lateinit var tvLogin :TextView
     lateinit var tvBio :TextView
@@ -73,11 +76,14 @@ class GithubFragment : Fragment() {
 
     private fun setupScreen(view :View){
         view.apply {
+            header = findViewById(R.id.layout_header_github)
             tvNome = findViewById(R.id.github_tv_nome)
             tvLogin = findViewById(R.id.github_tv_login)
             tvBio = findViewById(R.id.github_tv_bio)
             cImagePhoto = findViewById(R.id.github_img_avatar)
         }
+        header.isVisible = false
+
     }
 
     private fun getUserInfo() {
@@ -92,6 +98,7 @@ class GithubFragment : Fragment() {
                         tvLogin.text = it.login
                         tvBio.text = it.bio
                         LoadImageTask(cImagePhoto).execute(it.avatar_url)
+                        header.isVisible = true
                     }
 
                 }else{

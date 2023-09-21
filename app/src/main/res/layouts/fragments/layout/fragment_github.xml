@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_fragment_github"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.GithubFragment">
+    tools:context=".fragments.GithubFragment"
+    >
 
     <RelativeLayout
         android:id="@+id/layout_header_github"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/github_img_avatar"
@@ -21,9 +24,10 @@
             app:civ_border_color="@color/white"
             app:civ_border_width="2dp"
             app:civ_fill_color="@color/white"
+            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/gihub_ll_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,16 +38,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/none"
-                android:textSize="20dp"
-                />
+                android:textSize="20dp"/>
             <TextView
                 android:id="@+id/github_tv_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="8dp"
                 android:text="@string/none"
-                android:layout_toRightOf="@id/github_tv_nome"/>
-        </LinearLayout>
+                android:layout_below="@id/github_tv_nome"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/github_tv_bio"
