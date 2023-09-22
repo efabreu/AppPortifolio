@@ -14,22 +14,22 @@
         android:layout_height="100sp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/efabreu_photo"
-        app:civ_border_color="@color/white"
+        app:civ_border_color="@color/green"
         app:civ_border_width="2dp"
-        app:civ_fill_color="@color/white"
+        app:civ_fill_color="@color/green"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nome"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/email"
-        android:textColor="@color/white"
+        android:textColor="@color/green"
         android:textSize="14sp"
         android:layout_marginBottom="16dp"/>
 </LinearLayout>

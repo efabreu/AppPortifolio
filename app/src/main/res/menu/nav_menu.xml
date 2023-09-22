@@ -8,15 +8,15 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/nav_home"
-            android:title="Home"/>
+            android:title="@string/home"/>
         <item
             android:id="@+id/nav_linkedin"
             android:icon="@drawable/nav_linkedin"
-            android:title="LinkedIn"/>
+            android:title="@string/linkedin"/>
         <item
             android:id="@+id/nav_github"
             android:icon="@drawable/nav_github"
-            android:title="Github"/>
+            android:title="@string/github"/>
     </group>
 
 </menu>
