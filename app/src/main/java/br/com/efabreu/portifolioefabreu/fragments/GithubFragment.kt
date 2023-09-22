@@ -13,10 +13,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.efabreu.portifolioefabreu.R
+import br.com.efabreu.portifolioefabreu.adapter.ReposAdapter
 import br.com.efabreu.portifolioefabreu.data.OwnerApi
+import br.com.efabreu.portifolioefabreu.data.RepositoriesApi
 import br.com.efabreu.portifolioefabreu.data.RetrofitService
 import br.com.efabreu.portifolioefabreu.model.Owner
+import br.com.efabreu.portifolioefabreu.model.Repository
 import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +42,10 @@ class GithubFragment : Fragment() {
     lateinit var tvLogin :TextView
     lateinit var tvBio :TextView
     lateinit var cImagePhoto :CircleImageView
+    lateinit var recViewRepos :RecyclerView
+    lateinit var listaRepos :List<Repository>
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +57,10 @@ class GithubFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setupScreen(view)
         getUserInfo()
+        getRepositories()
 
     }
 
@@ -81,9 +92,19 @@ class GithubFragment : Fragment() {
             tvLogin = findViewById(R.id.github_tv_login)
             tvBio = findViewById(R.id.github_tv_bio)
             cImagePhoto = findViewById(R.id.github_img_avatar)
+            recViewRepos = findViewById(R.id.rv_repositories)
         }
         header.isVisible = false
 
+    }
+
+    fun setupReposList(lista :List<Repository>){
+        val reposAdapter = ReposAdapter(lista)
+        recViewRepos.layoutManager = LinearLayoutManager(context)
+        recViewRepos.apply {
+            isVisible = true
+            adapter = reposAdapter
+        }
     }
 
     private fun getUserInfo() {
@@ -92,7 +113,6 @@ class GithubFragment : Fragment() {
         ownerApi.getUser("efabreu").enqueue(object : Callback<Owner> {
             override fun onResponse(call: Call<Owner>, response: Response<Owner>) {
                 if (response.isSuccessful) {
-
                     response.body()?.let {
                         tvNome.text = it.name
                         tvLogin.text = it.login
@@ -105,9 +125,28 @@ class GithubFragment : Fragment() {
                     Toast.makeText(context, "Erro ao conectar com Github.", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<Owner>, t: Throwable) {
                 Log.d("Retrofit ->", t.message.toString())
+            }
+        })
+    }
+    private fun getRepositories(){
+        val retrofitService = RetrofitService()
+        val reposApi = retrofitService.retrofit.create(RepositoriesApi::class.java)
+        reposApi.getRepos("efabreu").enqueue(object :Callback<List<Repository>> {
+            override fun onResponse(
+                call: Call<List<Repository>>,
+                response: Response<List<Repository>>
+            ) {
+                if(response.isSuccessful){
+                    response.body()?.let {
+                        setupReposList(it)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
+                TODO("Not yet implemented")
             }
 
         })

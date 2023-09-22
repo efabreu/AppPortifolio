@@ -8,7 +8,7 @@ import retrofit2.http.Path
 interface RepositoriesApi {
 
     @GET("/users/{user}/repos")
-    fun getUser(
+    fun getRepos(
         @Path("user") user :String
     ): Call<List<Repository>>
 
