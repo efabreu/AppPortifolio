@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Portifólio EFABREU</string>
+    <string name="nome">Eduardo Abreu</string>
+    <string name="email">efreitasdeabreu@gmail.com</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open_nav">Abrir nav</string>
     <string name="close_nav">Fechar nav</string>

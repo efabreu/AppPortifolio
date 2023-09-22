@@ -8,7 +8,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_gravity="center"
-        android:layout_margin="16dp"
+        android:layout_margin="2dp"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         card_view:cardCornerRadius="10dp"
@@ -16,16 +16,19 @@
         <RelativeLayout
             android:id="@+id/item_repo_rlayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
             <TextView
                 android:id="@+id/item_repo_name"
                 android:text="@string/none"
+                style="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"/>
             <TextView
                 android:id="@+id/item_repo_descr"
                 android:text="@string/none"
+                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_repo_name"
