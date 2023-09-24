@@ -73,6 +73,19 @@
         android:layout_alignParentEnd="true"
         tools:listitem="@layout/repos_item"/>
 
+    <ProgressBar
+        android:id="@+id/github_progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/github_nointernet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:src="@drawable/baseline_signal_wifi_connected_no_internet_4_24"/>
+
 
 
 

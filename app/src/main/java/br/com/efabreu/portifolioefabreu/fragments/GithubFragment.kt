@@ -1,20 +1,28 @@
 package br.com.efabreu.portifolioefabreu.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import br.com.efabreu.portifolioefabreu.R
 import br.com.efabreu.portifolioefabreu.adapter.ReposAdapter
 import br.com.efabreu.portifolioefabreu.data.OwnerApi
@@ -37,13 +45,14 @@ class GithubFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var header :RelativeLayout
-    lateinit var tvNome :TextView
-    lateinit var tvLogin :TextView
-    lateinit var tvBio :TextView
-    lateinit var cImagePhoto :CircleImageView
-    lateinit var recViewRepos :RecyclerView
-    lateinit var listaRepos :List<Repository>
+    private lateinit var header :RelativeLayout
+    private lateinit var tvNome :TextView
+    private lateinit var tvLogin :TextView
+    private lateinit var tvBio :TextView
+    private lateinit var cImagePhoto :CircleImageView
+    private lateinit var recViewRepos :RecyclerView
+    private lateinit var noInternet :ImageView
+    private lateinit var progressBar :ProgressBar
 
 
 
@@ -62,6 +71,23 @@ class GithubFragment : Fragment() {
         getUserInfo()
         getRepositories()
 
+    }
+    override fun onResume() {
+        super.onResume()
+        if (checkForInternet(context)) {
+            getUserInfo()
+            getRepositories()
+        } else {
+            emptyState()
+        }
+    }
+
+    private fun emptyState() {
+
+        progressBar.isVisible = false
+        header.isVisible = false
+        recViewRepos.isVisible = false
+        noInternet.isVisible = true
     }
 
     class LoadImageTask(private val circleImageView: CircleImageView) : AsyncTask<String, Void, Bitmap>()
@@ -93,18 +119,25 @@ class GithubFragment : Fragment() {
             tvBio = findViewById(R.id.github_tv_bio)
             cImagePhoto = findViewById(R.id.github_img_avatar)
             recViewRepos = findViewById(R.id.rv_repositories)
+            progressBar = findViewById(R.id.github_progressBar)
+            noInternet = findViewById(R.id.github_nointernet)
         }
+        progressBar.isVisible = true
         header.isVisible = false
+        recViewRepos.isVisible = false
+
 
     }
 
     fun setupReposList(lista :List<Repository>){
+
         val reposAdapter = ReposAdapter(lista)
         recViewRepos.layoutManager = LinearLayoutManager(context)
         recViewRepos.apply {
             isVisible = true
             adapter = reposAdapter
         }
+
     }
 
     private fun getUserInfo() {
@@ -118,7 +151,10 @@ class GithubFragment : Fragment() {
                         tvLogin.text = it.login
                         tvBio.text = it.bio
                         LoadImageTask(cImagePhoto).execute(it.avatar_url)
+                        noInternet.isVisible = false
                         header.isVisible = true
+                        progressBar.isVisible = false
+                        recViewRepos.isVisible = true
                     }
 
                 }else{
@@ -146,10 +182,24 @@ class GithubFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Repository>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("Retrofit ->", t.message.toString())
             }
 
         })
+    }
+    fun checkForInternet(context: Context?): Boolean {
+        val connectivityManager =
+            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val network = connectivityManager.activeNetwork ?: return false
+        val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+        return when {
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            else -> false
+        }
+
     }
 
     override fun onCreateView(
@@ -172,6 +222,9 @@ class GithubFragment : Fragment() {
             }
     }
 }
+
+
+
 
 
 

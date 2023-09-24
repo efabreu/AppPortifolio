@@ -22,6 +22,7 @@
                 android:id="@+id/item_repo_name"
                 android:text="@string/none"
                 style="@style/TextAppearance.AppCompat.Title"
+                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"/>
@@ -29,6 +30,7 @@
                 android:id="@+id/item_repo_descr"
                 android:text="@string/none"
                 style="@style/TextAppearance.AppCompat.Small"
+                android:maxLines="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_repo_name"
