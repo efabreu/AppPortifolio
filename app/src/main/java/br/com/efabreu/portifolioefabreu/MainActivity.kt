@@ -5,20 +5,22 @@ import android.view.MenuItem
 import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import br.com.efabreu.portifolioefabreu.fragments.GithubFragment
 import br.com.efabreu.portifolioefabreu.fragments.HomeFragment
 import br.com.efabreu.portifolioefabreu.fragments.LinkedInFragment
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var toolbar :Toolbar
+    private lateinit var toolbar :MaterialToolbar
+    private lateinit var collapseTb :CollapsingToolbarLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun setupDrawer(savedInstanceState: Bundle?) {
         drawerLayout = findViewById(R.id.drawer_layout)
         toolbar = findViewById(R.id.toolbar)
+        collapseTb = findViewById(R.id.collapsing_tb)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Home"
+        collapseTb.title = "Home"
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(
@@ -65,19 +68,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {
+                collapseTb.title = "Home"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, HomeFragment()).commit()
-                supportActionBar?.title = "Home"
             }
             R.id.nav_linkedin -> {
+                collapseTb.title = "LinkedIn"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, LinkedInFragment()).commit()
-                supportActionBar?.title = "LinkedIn"
             }
             R.id.nav_github -> {
+                collapseTb.title = "Github"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, GithubFragment()).commit()
-                supportActionBar?.title = "Github"
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
