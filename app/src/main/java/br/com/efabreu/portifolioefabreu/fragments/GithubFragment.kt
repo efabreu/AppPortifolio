@@ -1,13 +1,17 @@
 package br.com.efabreu.portifolioefabreu.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
+import android.icu.lang.UProperty.INT_START
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.AsyncTask
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,10 +23,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import br.com.efabreu.portifolioefabreu.R
 import br.com.efabreu.portifolioefabreu.adapter.ReposAdapter
 import br.com.efabreu.portifolioefabreu.data.OwnerApi
@@ -148,8 +150,22 @@ class GithubFragment : Fragment() {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         tvNome.text = it.name
-                        tvLogin.text = it.login
-                        tvBio.text = it.bio
+                        val usernameStr = SpannableStringBuilder("Username: ${it.login}")
+                        usernameStr.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            0,
+                            9,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        tvLogin.text = usernameStr
+                        val bioStr = SpannableStringBuilder("Bio: ${it.bio}")
+                        bioStr.setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            0,
+                            4,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                        tvBio.text = bioStr
                         LoadImageTask(cImagePhoto).execute(it.avatar_url)
                         noInternet.isVisible = false
                         header.isVisible = true
